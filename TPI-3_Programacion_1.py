@@ -45,6 +45,15 @@ def leer_opcion_menu(min_op: int, max_op: int) -> int:
             return n
     return 0
 
+# ------------------------- Normalización / Validaciones -------------------------
+
+def normalizar_texto(s: str) -> str:
+    """Quita espacios extras y colapsa espacios internos."""
+    s = s.strip()
+    s = " ".join(s.split())
+    return s
+
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
