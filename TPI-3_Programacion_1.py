@@ -53,6 +53,9 @@ def normalizar_texto(s: str) -> str:
     s = " ".join(s.split())
     return s
 
+def normalizar_clave_nombre(s: str) -> str:
+    """Normaliza un nombre para comparaciones insensibles a mayúsculas y espacios."""
+    return normalizar_texto(s).lower()
 
 # ------------------------- Menú principal TPI Países -------------------------
 
