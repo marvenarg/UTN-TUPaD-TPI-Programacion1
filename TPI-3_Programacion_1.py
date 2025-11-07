@@ -57,6 +57,17 @@ def normalizar_clave_nombre(s: str) -> str:
     """Normaliza un nombre para comparaciones insensibles a mayúsculas y espacios."""
     return normalizar_texto(s).lower()
 
+def leer_entero_positivo(msg: str, permitir_cero: bool) -> int:
+    """Lee un entero >= 1 (o >=0 si permitir_cero=True)."""
+    while True:
+        s = input(msg).strip()
+        if s.isdigit():
+            n = int(s)
+            if n > 0 or (permitir_cero and n == 0):
+                return n
+        print("Entrada inválida. Debe ser un entero mayor a 0" +
+              ("" if not permitir_cero else " o igual a 0") + ".")
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
