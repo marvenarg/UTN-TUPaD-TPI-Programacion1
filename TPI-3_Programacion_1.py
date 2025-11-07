@@ -81,6 +81,12 @@ def leer_texto_no_vacio(msg: str, maxchar: int) -> str:
 
 # ------------------------- Persistencia CSV -------------------------
 
+def inicializar_csv(ruta_csv: str) -> None:
+    """Crea el archivo CSV vacío con encabezados si no existe."""
+    if not os.path.exists(ruta_csv):
+        with open(ruta_csv, "w", encoding="utf-8", newline="") as f:
+            escritor = csv.writer(f)
+            escritor.writerow(["nombre", "poblacion", "superficie", "continente"])
 
 # ------------------------- Menú principal TPI Países -------------------------
 
