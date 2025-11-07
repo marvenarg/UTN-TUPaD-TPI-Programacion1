@@ -68,6 +68,20 @@ def leer_entero_positivo(msg: str, permitir_cero: bool) -> int:
         print("Entrada inválida. Debe ser un entero mayor a 0" +
               ("" if not permitir_cero else " o igual a 0") + ".")
 
+def leer_texto_no_vacio(msg: str, maxchar: int) -> str:
+    """Lee un texto no vacío y con límite de caracteres."""
+    while True:
+        s = input(msg).strip()
+        if s == "":
+            print("No se permite un valor vacío. Intente nuevamente.")
+        elif len(s) > maxchar:
+            print(f"El texto supera el máximo permitido ({maxchar} caracteres).")
+        else:
+            return s
+
+# ------------------------- Persistencia CSV -------------------------
+
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
