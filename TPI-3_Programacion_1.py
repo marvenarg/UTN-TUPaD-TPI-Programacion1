@@ -88,6 +88,48 @@ def inicializar_csv(ruta_csv: str) -> None:
             escritor = csv.writer(f)
             escritor.writerow(["nombre", "poblacion", "superficie", "continente"])
 
+def cargar_paises(ruta_csv: str) -> list:
+    """Carga el CSV de países a una lista de diccionarios."""
+    paises = []
+    if not os.path.exists(ruta_csv):
+        return paises  # archivo no existe: lista vacía
+
+    with open(ruta_csv, "r", encoding="utf-8", newline="") as f:
+        lector = csv.DictReader(f)
+        if lector.fieldnames is None:
+            return paises
+
+        for fila in lector:
+            if ("nombre" not in fila or
+                "poblacion" not in fila or
+                "superficie" not in fila or
+                "continente" not in fila):
+                continue  # fila mal formada
+
+            nombre = normalizar_texto(fila["nombre"])
+            pobl_str = fila["poblacion"].strip()
+            sup_str = fila["superficie"].strip()
+            cont = normalizar_texto(fila["continente"])
+
+            if nombre == "" or cont == "":
+                continue
+
+            if not pobl_str.isdigit() or not sup_str.isdigit():
+                continue
+
+            pobl = int(pobl_str)
+            sup = int(sup_str)
+            if pobl < 0 or sup < 0:
+                continue
+
+            paises.append({
+                "nombre": nombre,
+                "poblacion": pobl,
+                "superficie": sup,
+                "continente": cont
+            })
+    return paises
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
