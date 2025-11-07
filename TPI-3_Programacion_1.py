@@ -1,4 +1,6 @@
+# Se importan las librerías necesarias
 import os
+import csv
 
 # ------------------------- Utilidades de consola -------------------------
 
@@ -129,6 +131,24 @@ def cargar_paises(ruta_csv: str) -> list:
                 "continente": cont
             })
     return paises
+
+def guardar_paises(ruta_csv: str, paises: list) -> None:
+    """Guarda la lista de países en el CSV (lo crea si no existe y lo sobrescribe)."""
+    with open(ruta_csv, "w", encoding="utf-8", newline="") as f:
+        campos = ["nombre", "poblacion", "superficie", "continente"]
+        escritor = csv.DictWriter(f, fieldnames=campos)
+        escritor.writeheader()
+        i = 0
+        while i < len(paises):
+            escritor.writerow({
+                "nombre": paises[i]["nombre"],
+                "poblacion": paises[i]["poblacion"],
+                "superficie": paises[i]["superficie"],
+                "continente": paises[i]["continente"]
+            })
+            i += 1
+
+# ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
 # ------------------------- Menú principal TPI Países -------------------------
 
