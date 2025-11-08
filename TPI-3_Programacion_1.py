@@ -138,15 +138,7 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
         campos = ["nombre", "poblacion", "superficie", "continente"]
         escritor = csv.DictWriter(f, fieldnames=campos)
         escritor.writeheader()
-        i = 0
-        while i < len(paises):
-            escritor.writerow({
-                "nombre": paises[i]["nombre"],
-                "poblacion": paises[i]["poblacion"],
-                "superficie": paises[i]["superficie"],
-                "continente": paises[i]["continente"]
-            })
-            i += 1
+        escritor.writerows(paises)
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
