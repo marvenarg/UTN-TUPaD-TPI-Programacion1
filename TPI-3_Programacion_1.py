@@ -142,6 +142,16 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
+def filtrar_por_rango(paises: list, campo: str, minimo: int, maximo: int) -> list:
+    """Filtra países por un rango numérico (poblacion o superficie)."""
+    resultado = []
+    i = 0
+    while i < len(paises):
+        valor = paises[i][campo]
+        if minimo <= valor <= maximo:
+            resultado.append(paises[i])
+        i += 1
+    return resultado
 def filtrar_por_continente(paises: list, continente: str) -> list:
     """Filtra países por continente (comparación normalizada)."""
     cont_norm = normalizar_clave_nombre(continente)
