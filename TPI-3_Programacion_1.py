@@ -141,7 +141,54 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
         escritor.writerows(paises)
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
+# ------------------------- Estadísticas -------------------------
 
+def mostrar_estadisticas(paises: list) -> None:
+    """Muestra estadísticas generales del catálogo de países."""
+    if len(paises) == 0:
+        print("\nNo hay países cargados, no se pueden calcular estadísticas.")
+        return
+
+    max_pais = paises[0]
+    min_pais = paises[0]
+    suma_pobl = 0
+    suma_sup = 0
+
+    i = 0
+    while i < len(paises):
+        p = paises[i]
+        suma_pobl += p["poblacion"]
+        suma_sup += p["superficie"]
+
+        if p["poblacion"] > max_pais["poblacion"]:
+            max_pais = p
+        if p["poblacion"] < min_pais["poblacion"]:
+            min_pais = p
+
+        i += 1
+
+    prom_pobl = suma_pobl / len(paises)
+    prom_sup = suma_sup / len(paises)
+
+    conteo_cont = {}
+    i = 0
+    while i < len(paises):
+        cont = paises[i]["continente"]
+        if cont in conteo_cont:
+            conteo_cont[cont] += 1
+        else:
+            conteo_cont[cont] = 1
+        i += 1
+
+    print("\n--- Estadísticas ---")
+    print(f"País con mayor población: {max_pais['nombre']} ({max_pais['poblacion']})")
+    print(f"País con menor población: {min_pais['nombre']} ({min_pais['poblacion']})")
+    print(f"Promedio de población: {prom_pobl:.2f}")
+    print(f"Promedio de superficie: {prom_sup:.2f}")
+    print("\nCantidad de países por continente:")
+    for cont, cant in conteo_cont.items():
+        print(f" - {cont}: {cant}")
+        
 def ordenar_paises(paises: list, campo: str, ascendente: bool) -> None:   
     """Ordena la lista de países usando bubble sort según el campo indicado.
     Modifica directamente la misma lista (sin crear otra), en orden ascendente
