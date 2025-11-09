@@ -173,6 +173,15 @@ def seleccionar_pais_por_nombre(paises: list) -> int:
         print("Selección inválida.")
         return -1
     return indices[sel - 1]
+def buscar_indices_por_nombre(paises: list, texto_busqueda: str) -> list:
+    """Devuelve una lista de índices cuyos nombres contienen el texto buscado (normalizado)."""
+    objetivo = normalizar_clave_nombre(texto_busqueda)
+    indices = []
+    for index, pais in enumerate(paises):
+        nombre_norm = normalizar_clave_nombre(pais["nombre"])
+        if objetivo in nombre_norm:
+            indices.append(index)
+    return indices
 
 # ------------------------- Menú principal TPI Países -------------------------
 
