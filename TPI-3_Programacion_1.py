@@ -142,6 +142,37 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
+def seleccionar_pais_por_nombre(paises: list) -> int:
+    """
+    Permite buscar un país por nombre (parcial) y seleccionar uno si hay múltiples coincidencias.
+    Devuelve el índice del país en la lista o -1 si no hay selección posible.
+    """
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return -1
+
+    texto = leer_texto_no_vacio("Ingrese el nombre (o parte del nombre) del país: ", 80)
+    indices = buscar_indices_por_nombre(paises, texto)
+
+    if len(indices) == 0:
+        print("No se encontraron países que coincidan con la búsqueda.")
+        return -1
+
+    if len(indices) == 1:
+        return indices[0]
+
+    print("\nSe encontraron varios países:")
+    i = 0
+    while i < len(indices):
+        p = paises[indices[i]]
+        print(f"{i+1}. {p['nombre']} | Población: {p['poblacion']} | "
+              f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
+        i += 1
+    sel = leer_entero_positivo("Seleccione el número del país: ", permitir_cero=False)
+    if sel < 1 or sel > len(indices):
+        print("Selección inválida.")
+        return -1
+    return indices[sel - 1]
 def buscar_indices_por_nombre(paises: list, texto_busqueda: str) -> list:
     """Devuelve una lista de índices cuyos nombres contienen el texto buscado (normalizado)."""
     objetivo = normalizar_clave_nombre(texto_busqueda)
