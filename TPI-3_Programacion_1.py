@@ -142,6 +142,24 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
+def ordenar_paises(paises: list, campo: str, ascendente: bool) -> None:   
+    """Ordena la lista de países usando bubble sort según el campo indicado.
+    Modifica directamente la misma lista (sin crear otra), en orden ascendente
+    si ascendente es True, o descendente si es False."""
+    n = len(paises)
+    i = 0
+    while i < n - 1:
+        j = 0
+        while j < n - 1 - i:
+            a = paises[j][campo]
+            b = paises[j+1][campo]
+            cambiar = (a > b) if ascendente else (a < b)
+            if cambiar:
+                tmp = paises[j]
+                paises[j] = paises[j+1]
+                paises[j+1] = tmp
+            j += 1
+        i += 1
 def filtrar_por_rango(paises: list, campo: str, minimo: int, maximo: int) -> list:
     """Filtra países por un rango numérico (poblacion o superficie)."""
     resultado = []
