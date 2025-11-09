@@ -142,6 +142,17 @@ def guardar_paises(ruta_csv: str, paises: list) -> None:
 
 # ------------------------- Búsquedas, filtros y ordenamientos -------------------------
 
+def filtrar_por_continente(paises: list, continente: str) -> list:
+    """Filtra países por continente (comparación normalizada)."""
+    cont_norm = normalizar_clave_nombre(continente)
+    resultado = []
+    i = 0
+    while i < len(paises):
+        if normalizar_clave_nombre(paises[i]["continente"]) == cont_norm:
+            resultado.append(paises[i])
+        i += 1
+    return resultado
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
