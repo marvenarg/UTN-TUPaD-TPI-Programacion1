@@ -189,6 +189,85 @@ def mostrar_estadisticas(paises: list) -> None:
     for cont, cant in conteo_cont.items():
         print(f" - {cont}: {cant}")
         
+def ordenar_paises(paises: list, campo: str, ascendente: bool) -> None:   
+    """Ordena la lista de países usando bubble sort según el campo indicado.
+    Modifica directamente la misma lista (sin crear otra), en orden ascendente
+    si ascendente es True, o descendente si es False."""
+    n = len(paises)
+    i = 0
+    while i < n - 1:
+        j = 0
+        while j < n - 1 - i:
+            a = paises[j][campo]
+            b = paises[j+1][campo]
+            cambiar = (a > b) if ascendente else (a < b)
+            if cambiar:
+                tmp = paises[j]
+                paises[j] = paises[j+1]
+                paises[j+1] = tmp
+            j += 1
+        i += 1
+def filtrar_por_rango(paises: list, campo: str, minimo: int, maximo: int) -> list:
+    """Filtra países por un rango numérico (poblacion o superficie)."""
+    resultado = []
+    i = 0
+    while i < len(paises):
+        valor = paises[i][campo]
+        if minimo <= valor <= maximo:
+            resultado.append(paises[i])
+        i += 1
+    return resultado
+def filtrar_por_continente(paises: list, continente: str) -> list:
+    """Filtra países por continente (comparación normalizada)."""
+    cont_norm = normalizar_clave_nombre(continente)
+    resultado = []
+    i = 0
+    while i < len(paises):
+        if normalizar_clave_nombre(paises[i]["continente"]) == cont_norm:
+            resultado.append(paises[i])
+        i += 1
+    return resultado
+def seleccionar_pais_por_nombre(paises: list) -> int:
+    """
+    Permite buscar un país por nombre (parcial) y seleccionar uno si hay múltiples coincidencias.
+    Devuelve el índice del país en la lista o -1 si no hay selección posible.
+    """
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return -1
+
+    texto = leer_texto_no_vacio("Ingrese el nombre (o parte del nombre) del país: ", 80)
+    indices = buscar_indices_por_nombre(paises, texto)
+
+    if len(indices) == 0:
+        print("No se encontraron países que coincidan con la búsqueda.")
+        return -1
+
+    if len(indices) == 1:
+        return indices[0]
+
+    print("\nSe encontraron varios países:")
+    i = 0
+    while i < len(indices):
+        p = paises[indices[i]]
+        print(f"{i+1}. {p['nombre']} | Población: {p['poblacion']} | "
+              f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
+        i += 1
+    sel = leer_entero_positivo("Seleccione el número del país: ", permitir_cero=False)
+    if sel < 1 or sel > len(indices):
+        print("Selección inválida.")
+        return -1
+    return indices[sel - 1]
+def buscar_indices_por_nombre(paises: list, texto_busqueda: str) -> list:
+    """Devuelve una lista de índices cuyos nombres contienen el texto buscado (normalizado)."""
+    objetivo = normalizar_clave_nombre(texto_busqueda)
+    indices = []
+    for index, pais in enumerate(paises):
+        nombre_norm = normalizar_clave_nombre(pais["nombre"])
+        if objetivo in nombre_norm:
+            indices.append(index)
+    return indices
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
