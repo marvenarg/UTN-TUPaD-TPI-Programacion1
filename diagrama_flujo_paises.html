@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagrama de Flujo - Sistema de Gestión de Países</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #e2e8f0;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 2em;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 1.1em;
+      }
+
+      .diagram {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .node {
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        max-width: 400px;
+        cursor: pointer;
+      }
+
+      .node:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .start-end {
+        background: #5a67d8;
+        color: white;
+        border-radius: 50px;
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+
+      .process {
+        background: #e53e3e;
+        color: white;
+      }
+
+      .decision {
+        background: #38b2ac;
+        color: white;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        padding: 30px 40px;
+        min-width: 250px;
+      }
+
+      .menu {
+        background: #48bb78;
+        color: white;
+        font-weight: 600;
+        padding: 20px 30px;
+      }
+
+      .action {
+        background: #ed8936;
+        color: white;
+        font-size: 0.95em;
+      }
+
+      .arrow {
+        width: 3px;
+        height: 30px;
+        background: #666;
+        position: relative;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 12px solid #666;
+      }
+
+      .options-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin: 20px 0;
+        width: 100%;
+        max-width: 1200px;
+      }
+
+      .option-box {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        transition: all 0.3s;
+      }
+
+      .option-box:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+      }
+
+      .option-title {
+        background: #4a5568;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .function-call {
+        background: #f5f5f5;
+        padding: 8px 12px;
+        border-radius: 5px;
+        margin: 5px 0;
+        font-family: "Courier New", monospace;
+        font-size: 0.85em;
+        color: #d63384;
+      }
+
+      .note {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 10px;
+        margin: 5px 0;
+        font-size: 0.85em;
+        color: #856404;
+      }
+
+      .legend {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .legend-box {
+        width: 40px;
+        height: 30px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .flow-section {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .section-title {
+        color: #4a5568;
+        font-weight: 600;
+        font-size: 1.2em;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Diagrama de Flujo del Programa Principal</h1>
+      <p class="subtitle">Sistema de Gestión de Países - Flujo de Ejecución</p>
+
+      <div class="diagram">
+        <!-- INICIO -->
+        <div class="node start-end">INICIO DEL PROGRAMA</div>
+        <div class="arrow"></div>
+
+        <!-- INICIALIZACIÓN -->
+        <div class="flow-section" style="width: 100%; max-width: 600px">
+          <div class="section-title">Fase de Inicialización</div>
+          <div class="node process">Determinar ruta del archivo CSV</div>
+          <div class="arrow"></div>
+          <div class="node process">inicializar_csv()</div>
+          <div class="note">Crea paises.csv con encabezados si no existe</div>
+          <div class="arrow"></div>
+          <div class="node process">cargar_paises()</div>
+          <div class="note">
+            Carga todos los países existentes del CSV a memoria
+          </div>
+        </div>
+
+        <div class="arrow"></div>
+
+        <!-- BUCLE PRINCIPAL -->
+        <div class="node decision">
+          ¿Continuar ejecución?<br />(seguir = True)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="node process">limpiar()</div>
+        <div class="note">Limpia la pantalla de la consola</div>
+        <div class="arrow"></div>
+
+        <div class="node menu">MENÚ PRINCIPAL<br />dibujar_menu()</div>
+        <div class="note">Muestra las 9 opciones disponibles</div>
+        <div class="arrow"></div>
+
+        <div class="node process">leer_opcion_menu(1, 9)</div>
+        <div class="note">Valida entrada del usuario (1-9)</div>
+        <div class="arrow"></div>
+
+        <!-- OPCIONES DEL MENÚ -->
+        <div class="flow-section" style="width: 100%">
+          <div class="section-title">Opciones del Menú (match-case)</div>
+          <div class="options-container">
+            <!-- OPCIÓN 1 -->
+            <div class="option-box">
+              <div class="option-title">Opción 1: Agregar país</div>
+              <div class="function-call">agregar_pais(paises, ruta_csv)</div>
+              <div class="note">
+                <strong>Flujo interno:</strong><br />
+                • leer_texto_no_vacio()<br />
+                • buscar_indices_por_nombre()<br />
+                • leer_entero_positivo() x2<br />
+                • guardar_paises()
+              </div>
+            </div>
+
+            <!-- OPCIÓN 2 -->
+            <div class="option-box">
+              <div class="option-title">Opción 2: Actualizar población</div>
+              <div class="function-call">actualizar_poblacion_pais()</div>
+              <div class="note">
+                <strong>Flujo interno:</strong><br />
+                • seleccionar_pais_por_nombre()<br />
+                • leer_entero_positivo()<br />
+                • guardar_paises()
+              </div>
+            </div>
+
+            <!-- OPCIÓN 3 -->
+            <div class="option-box">
+              <div class="option-title">Opción 3: Actualizar superficie</div>
+              <div class="function-call">actualizar_superficie_pais()</div>
+              <div class="note">
+                <strong>Flujo interno:</strong><br />
+                • seleccionar_pais_por_nombre()<br />
+                • leer_entero_positivo()<br />
+                • guardar_paises()
+              </div>
+            </div>
+
+            <!-- OPCIÓN 4 -->
+            <div class="option-box">
+              <div class="option-title">Opción 4: Buscar por nombre</div>
+              <div class="function-call">buscar_pais_por_nombre()</div>
+              <div class="note">
+                <strong>Flujo interno:</strong><br />
+                • leer_texto_no_vacio()<br />
+                • buscar_indices_por_nombre()<br />
+                • Muestra resultados
+              </div>
+            </div>
+
+            <!-- OPCIÓN 5 -->
+            <div class="option-box">
+              <div class="option-title">Opción 5: Filtrar países</div>
+              <div class="function-call">filtrar_paises()</div>
+              <div class="note">
+                <strong>Submenú:</strong><br />
+                1. filtrar_por_continente()<br />
+                2. filtrar_por_rango() - población<br />
+                3. filtrar_por_rango() - superficie<br />
+                • mostrar_paises()
+              </div>
+            </div>
+
+            <!-- OPCIÓN 6 -->
+            <div class="option-box">
+              <div class="option-title">Opción 6: Ordenar países</div>
+              <div class="function-call">ordenar_paises_menu()</div>
+              <div class="note">
+                <strong>Submenú:</strong><br />
+                • Selecciona campo (nombre/población/superficie)<br />
+                • Selecciona orden (asc/desc)<br />
+                • ordenar_paises() - Bubble Sort<br />
+                • mostrar_paises()
+              </div>
+            </div>
+
+            <!-- OPCIÓN 7 -->
+            <div class="option-box">
+              <div class="option-title">Opción 7: Estadísticas</div>
+              <div class="function-call">mostrar_estadisticas()</div>
+              <div class="note">
+                <strong>Calcula:</strong><br />
+                • Máximo/mínimo población<br />
+                • Promedios<br />
+                • Distribución por continente
+              </div>
+            </div>
+
+            <!-- OPCIÓN 8 -->
+            <div class="option-box">
+              <div class="option-title">Opción 8: Mostrar todos</div>
+              <div class="function-call">mostrar_paises()</div>
+              <div class="note">
+                <strong>Acción:</strong><br />
+                Lista todos los países cargados con su información completa
+              </div>
+            </div>
+
+            <!-- OPCIÓN 9 -->
+            <div class="option-box">
+              <div class="option-title">Opción 9: Salir</div>
+              <div class="function-call">seguir = False</div>
+              <div class="note">
+                <strong>Acción:</strong><br />
+                Termina el bucle principal y finaliza el programa
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow"></div>
+
+        <div class="node process">pausar()</div>
+        <div class="note">Espera ENTER del usuario</div>
+        <div class="arrow"></div>
+
+        <div class="node process">Volver al inicio del bucle</div>
+        <div class="arrow"></div>
+
+        <div class="node decision">¿seguir == True?</div>
+        <div class="note">
+          Si es True: vuelve al menú<br />Si es False: sale del bucle
+        </div>
+        <div class="arrow"></div>
+
+        <!-- FIN -->
+        <div class="node start-end">FIN DEL PROGRAMA</div>
+      </div>
+
+      <!-- LEYENDA -->
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-box start-end"></div>
+          <span>Inicio/Fin</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box process"></div>
+          <span>Proceso</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box decision"></div>
+          <span>Decisión</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box menu"></div>
+          <span>Menú</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box action"></div>
+          <span>Acción</span>
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 30px;
+          padding: 20px;
+          background: #e7f3ff;
+          border-radius: 10px;
+          border-left: 4px solid #2196f3;
+        "
+      >
+        <h3 style="color: #1976d2; margin-bottom: 10px">
+          Características del Flujo
+        </h3>
+        <ul style="color: #555; line-height: 1.8">
+          <li>
+            <strong>Bucle principal:</strong> while seguir: ejecuta
+            continuamente hasta que el usuario selecciona Salir
+          </li>
+          <li>
+            <strong>Persistencia automática:</strong> Todas las operaciones de
+            modificación guardan inmediatamente en CSV
+          </li>
+          <li>
+            <strong>Validación en cada paso:</strong> Todas las entradas del
+            usuario son validadas antes de procesarse
+          </li>
+          <li>
+            <strong>Arquitectura modular:</strong> Cada opción del menú invoca
+            funciones especializadas
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
