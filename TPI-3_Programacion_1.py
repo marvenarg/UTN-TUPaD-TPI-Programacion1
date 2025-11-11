@@ -446,11 +446,20 @@ def ordenar_paises_menu(paises: list) -> None:
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
-    # Más adelante acá se valida si existe el archivo CSV de países, y en el caso que no exista se crea uno en blanco sólo con los campos, por ahora es solo el menú.
+    # Ruta del CSV en la misma carpeta que esté el .py
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    ruta_csv = os.path.join(base_dir, "paises.csv")
+
+    # Crea el CSV vacío con encabezados si no existe
+    inicializar_csv(ruta_csv)
+
+    # Se carga el catálogo inicial desde el CSV
+    paises = cargar_paises(ruta_csv)
+
     ancho_menu = 62
     opciones = [
         "Agregar país",
-        "Actualizar población",
+        "Actualizar población de un país",
         "Actualizar superficie de un país",
         "Buscar país por nombre",
         "Filtrar países (continente / población / superficie)",
@@ -469,43 +478,36 @@ def main():
         limpiar()
         match opcion:
             case 1:
-                print("1) Agregar país")
-                # TODO: llamar a la función que agrega un país nuevo
+                agregar_pais(paises, ruta_csv)
                 pausar()
             case 2:
-                print("2) Actualizar la población de un país")
-                # TODO: llamar a la función que actualiza la población de un país
+                actualizar_poblacion_pais(paises, ruta_csv)
                 pausar()
             case 3:
-                print("3) Actualizar la superficie de un país")
-                # TODO: llamar a la función que actualiza la superficie de un país
-                pausar()                    
+                actualizar_superficie_pais(paises, ruta_csv)
+                pausar()
             case 4:
-                print("4) Buscar país por nombre")
-                # TODO: llamar a la función de búsqueda por nombre
+                buscar_pais_por_nombre(paises)
                 pausar()
             case 5:
-                print("5) Filtrar países")
-                # TODO: llamar a la función de filtros (continente / rango población / rango superficie)
+                filtrar_paises(paises)
                 pausar()
             case 6:
-                print("6) Ordenar países")
-                # TODO: llamar a la función de ordenamiento
+                ordenar_paises_menu(paises)
                 pausar()
             case 7:
-                print("7) Mostrar estadísticas")
-                # TODO: llamar a la función que calcula y muestra estadísticas
+                mostrar_estadisticas(paises)
                 pausar()
             case 8:
-                print("8) Mostrar todos los países")
-                # TODO: llamar a la función que lista todos los países
+                print("\n8) Mostrar todos los países")
+                mostrar_paises(paises)
                 pausar()
             case 9:
                 print("Saliendo del programa...")
                 seguir = False
             case _:
-                print("Opción inválida. Por favor, ingrese un número entre 1 y 8.")
+                print("Opción inválida. Por favor, ingrese un número entre 1 y 9.")
                 pausar()
 
-# Llamada directa a la función principal main () para iniciar el programa.
+# Llamada directa a la función principal main() para iniciar el programa.
 main()
