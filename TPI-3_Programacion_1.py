@@ -309,6 +309,9 @@ def agregar_pais(paises: list, ruta_csv: str) -> None:
         "continente": continente
     })
 
+    guardar_paises(ruta_csv, paises)
+    print("\nPaís agregado correctamente y guardado en el CSV.")
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
