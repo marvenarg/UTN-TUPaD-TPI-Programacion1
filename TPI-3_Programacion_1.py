@@ -272,7 +272,22 @@ def mostrar_estadisticas(paises: list) -> None:
     print("\nCantidad de países por continente:")
     for cont, cant in conteo_cont.items():
         print(f" - {cont}: {cant}")
-        
+
+# ------------------------- Operaciones sobre países -------------------------
+
+def mostrar_paises(paises: list) -> None:
+    """Muestra todos los países almacenados."""
+    if len(paises) == 0:
+        print("\nNo hay países cargados.")
+        return
+    print("\nListado de países:\n")
+    i = 0
+    while i < len(paises):
+        p = paises[i]
+        print(f"- {p['nombre']} | Población: {p['poblacion']} | "
+              f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
+        i += 1
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
