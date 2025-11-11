@@ -330,6 +330,24 @@ def actualizar_poblacion_pais(paises: list, ruta_csv: str) -> None:
     guardar_paises(ruta_csv, paises)
     print("Población actualizada y guardada en el CSV.")
 
+def actualizar_superficie_pais(paises: list, ruta_csv: str) -> None:
+    """Actualiza solo la superficie de un país."""
+    print("\n3) Actualizar superficie de un país")
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return
+
+    idx = seleccionar_pais_por_nombre(paises)
+    if idx == -1:
+        return
+
+    print(f"\nPaís seleccionado: {paises[idx]['nombre']}")
+    nueva_sup = leer_entero_positivo("Nueva superficie (≥ 1): ", permitir_cero=False)
+
+    paises[idx]["superficie"] = nueva_sup
+    guardar_paises(ruta_csv, paises)
+    print("Superficie actualizada y guardada en el CSV.")
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
