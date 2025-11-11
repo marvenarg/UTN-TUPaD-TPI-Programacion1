@@ -370,6 +370,48 @@ def buscar_pais_por_nombre(paises: list) -> None:
               f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
         i += 1
 
+def filtrar_paises(paises: list) -> None:
+    """Submenú para filtrar países."""
+    print("\n5) Filtrar países")
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return
+
+    print("1) Por continente")
+    print("2) Por rango de población")
+    print("3) Por rango de superficie")
+    op = leer_opcion_menu(1, 3)
+
+    if op == 1:
+        cont = leer_texto_no_vacio("Ingrese continente: ", 50)
+        resultado = filtrar_por_continente(paises, cont)
+    elif op == 2:
+        print("\nRango de población:")
+        min_p = leer_entero_positivo("Mínimo (≥ 0): ", permitir_cero=True)
+        max_p = leer_entero_positivo("Máximo (≥ 0): ", permitir_cero=True)
+        if max_p < min_p:
+            aux = min_p
+            min_p = max_p
+            max_p = aux
+        resultado = filtrar_por_rango(paises, "poblacion", min_p, max_p)
+    elif op == 3:
+        print("\nRango de superficie:")
+        min_s = leer_entero_positivo("Mínimo (≥ 0): ", permitir_cero=True)
+        max_s = leer_entero_positivo("Máximo (≥ 0): ", permitir_cero=True)
+        if max_s < min_s:
+            aux = min_s
+            min_s = max_s
+            max_s = aux
+        resultado = filtrar_por_rango(paises, "superficie", min_s, max_s)
+    else:
+        print("Opción inválida.")
+        return
+
+    if len(resultado) == 0:
+        print("\nNo se encontraron países con ese criterio.")
+    else:
+        mostrar_paises(resultado)
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
