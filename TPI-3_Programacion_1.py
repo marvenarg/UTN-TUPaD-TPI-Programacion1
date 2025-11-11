@@ -348,6 +348,28 @@ def actualizar_superficie_pais(paises: list, ruta_csv: str) -> None:
     guardar_paises(ruta_csv, paises)
     print("Superficie actualizada y guardada en el CSV.")
 
+def buscar_pais_por_nombre(paises: list) -> None:
+    """Busca países por nombre (coincidencia parcial) y los muestra."""
+    print("\n4) Buscar país por nombre")
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return
+
+    texto = leer_texto_no_vacio("Ingrese texto a buscar en el nombre: ", 80)
+    indices = buscar_indices_por_nombre(paises, texto)
+
+    if len(indices) == 0:
+        print("No se encontraron países que coincidan con la búsqueda.")
+        return
+
+    print("\nResultados de la búsqueda:\n")
+    i = 0
+    while i < len(indices):
+        p = paises[indices[i]]
+        print(f"- {p['nombre']} | Población: {p['poblacion']} | "
+              f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
+        i += 1
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
