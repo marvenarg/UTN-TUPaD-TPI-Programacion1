@@ -288,6 +288,27 @@ def mostrar_paises(paises: list) -> None:
               f"Superficie: {p['superficie']} km² | Continente: {p['continente']}")
         i += 1
 
+def agregar_pais(paises: list, ruta_csv: str) -> None:
+    """Agrega un país nuevo, verificando que el nombre sea único y que los campos no estén vacíos."""
+    print("\n1) Agregar país")
+    nombre = normalizar_texto(leer_texto_no_vacio("Nombre del país: ", 80))
+
+    # Validar que no exista ya (unicidad por nombre normalizado)
+    if len(buscar_indices_por_nombre(paises, nombre)) > 0:
+        print("Ya existe un país con ese nombre. No se puede duplicar.")
+        return
+
+    poblacion = leer_entero_positivo("Población (entero ≥ 1): ", permitir_cero=False)
+    superficie = leer_entero_positivo("Superficie en km² (entero ≥ 1): ", permitir_cero=False)
+    continente = normalizar_texto(leer_texto_no_vacio("Continente: ", 50))
+
+    paises.append({
+        "nombre": nombre,
+        "poblacion": poblacion,
+        "superficie": superficie,
+        "continente": continente
+    })
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
