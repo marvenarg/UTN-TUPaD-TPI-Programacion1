@@ -412,6 +412,37 @@ def filtrar_paises(paises: list) -> None:
     else:
         mostrar_paises(resultado)
 
+def ordenar_paises_menu(paises: list) -> None:
+    """Submenú para ordenar países."""
+    print("\n6) Ordenar países")
+    if len(paises) == 0:
+        print("No hay países cargados.")
+        return
+
+    print("1) Por nombre")
+    print("2) Por población")
+    print("3) Por superficie")
+    op = leer_opcion_menu(1, 3)
+
+    print("\nOrden:")
+    print("1) Ascendente")
+    print("2) Descendente")
+    ord_op = leer_opcion_menu(1, 2)
+    asc = (ord_op == 1)
+
+    if op == 1:
+        ordenar_paises(paises, "nombre", ascendente=asc)
+    elif op == 2:
+        ordenar_paises(paises, "poblacion", ascendente=asc)
+    elif op == 3:
+        ordenar_paises(paises, "superficie", ascendente=asc)
+    else:
+        print("Opción inválida.")
+        return
+
+    print("\nPaíses ordenados:")
+    mostrar_paises(paises)
+
 # ------------------------- Menú principal TPI Países -------------------------
 
 def main():
