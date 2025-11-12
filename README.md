@@ -1,5 +1,10 @@
 # Sistema de Gestión de Países
 
+## Links 
+
+### [🔗 📂 Carpeta Digital](https://drive.google.com/drive/folders/1TcXTEyjKJ9HYI_woHD6NZtlevxop7sJK?usp=drive_link)
+### [🔗 ▶️ Video YouTube](https://www.youtube.com/watch?v=EUzxahH88eI)
+
 ## Descripción del programa
 
 Este programa es una aplicación de consola desarrollada en Python que permite gestionar un catálogo de países con información sobre su población, superficie y continente al que pertenecen. El sistema utiliza un archivo CSV (`paises.csv`) como base de datos para almacenar y persistir la información de forma permanente.
